@@ -15,3 +15,14 @@ L service
   L static       # 정적파일위치(*.js,*.css,리소스등) 
   L templates    # 랜더링할 html 파일 위치
     L index.html # 서비스 메인 화면
+
+
+
+# 마리아 DB 
+- 
+- Download MariaDB Server
+  - mariadb-10.4.12-winx64.msi
+  - https://downloads.mariadb.org/interstitial/mariadb-10.4.12/winx64-packages/mariadb-10.4.12-winx64.msi/from/http%3A//mirror.terrahost.no/mariadb/
+
+# 비밀번호 
+  - 12341234

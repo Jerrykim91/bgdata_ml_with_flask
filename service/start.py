@@ -1,9 +1,12 @@
-# 플라스크
+# start.py
 
+# 플라스크
+# ---
 # 1단계- 모듈가지고 오기 
 from flask import Flask, render_template, request
 # flask의 json 팩 
 from flask import jsonify 
+from service.db import 
 # 생성 팩 불러오기 
 # from ml import detect_lang
 ## from service.ml import detect_lang
@@ -20,7 +23,10 @@ def home():
 # 번외
 @app.route('/map')
 def map():
-    return render_template('map.html')
+    gu_id = request
+
+    return jsonify(selectAreaGps(gu_id))
+
 # 번외-2
 @app.route('/test')
 def test():
@@ -42,6 +48,9 @@ def langTypeDetect ():
 # 4단계 - 서버가동 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
 
 
 # --- 
