@@ -1,0 +1,62 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        // 문서가 모두 로드되었다 -> 이벤트가 발생하면 자동호출
+        // DOM(Document Object Model) tree가 로드되었다
+        //$(documet).ready(function (){
+        $(document).ready(()=>{            
+            console.log(1)
+            // 테스트용 텍스트
+            let testMsg = `
+                BTS (Korean: 방탄소년단; RR: Bangtan Sonyeondan), also known as the Bangtan Boys, is a seven-member South Korean boy band formed in Seoul in 2010.[3] The septet co-writes and produces much of their output. Originally a hip hop group, their musical style has evolved to include a wide range of genres. Their lyrics, often focused on personal and social commentary, touch on the themes of mental health, troubles of school-age youth, loss, the journey towards loving oneself, and individualism. Their work features references to literature and psychological concepts and includes an alternative universe storyline. The group have staged several world tours.
+            `
+            // 텍스트 세팅
+            $('.oriInput').val(testMsg)
+        })
+    </script>
+</head>
+<body>
+    <div>
+        <fieldset>
+            <textarea class='oriInput'>원문</textarea>
+            <br>
+            <button id='LangDetectBtn'>언어감지</button>
+            <br>
+            <button onclick="alert('hi');">번역</button>
+            <br>
+            <textarea>번역문</textarea>
+        </fieldset>
+    </div>
+    <script>
+        // 내가 조작할 모든 요소가 메모리에 다 로드되었다
+        console.log(2)
+        // 언어감지 버튼을 찾아서, click이벤트를 적용해라
+        // $('css selector') => html내에 특정요소를 특정 or 찾는다
+        // $('css selector').on('이벤트',
+        //           콜백함수(이벤트가발생하면 실제적으로 일하는 함수))
+        //$('css selector').on('', function(){})
+        $('#LangDetectBtn').on('click', ()=>{
+            // ajax를 이용하여서 원문 들고 서버로 request를 수행
+            // http 프로토콜로 통신, 데이터를 들고가는 방식:메소드
+            // 메소드:get,post,push,...
+            // 통신, ajax, post, 수단=> js
+            console.log( $('.oriInput').val() )
+            $.post({
+                'url':'/langTypeDetect',              // 서버주소
+                'data':'ori=' + $('.oriInput').val(),// 파라미터
+                'dataType':'json',  // 서버가 json으로 응답한다
+                'success':( resJson )=>{
+                    console.log( '통신성공', resJson )
+                }, // 통신성공후
+                'error':function ( err ){
+                    console.log('통신실패', err)
+                } // 통신실패후
+            })
+            //alert('호출')
+        })
+        
+        
+    </script>
+</body>
+</html>
