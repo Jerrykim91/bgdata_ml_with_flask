@@ -1,1 +1,59 @@
-# 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- script - googleapis -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- script - code -->
+   <script>
+        // DOM(Document Object Model) tree
+        $(document).ready(()=>{
+            console.log(1)
+            // test_txt
+            let testMsg= `
+            BTS (Korean: 방탄소년단; RR: Bangtan Sonyeondan), also known as the Bangtan Boys, is a seven-member South Korean boy band formed in Seoul in 2010.[3] The septet co-writes and produces much of their output. Originally a hip hop group, their musical style has evolved to include a wide range of genres. Their lyrics, often focused on personal and social commentary, touch on the themes of mental health, troubles of school-age youth, loss, the journey towards loving oneself, and individualism. Their work features references to literature and psychological concepts and includes an alternative universe storyline. The group have staged several world tours.
+            `
+            // 텍스트 세팅 
+            $('.oriInput').val(testMsg)
+        })
+    </script>
+</head>
+
+<!-- body -->
+<body>
+   <div>
+    <fieldset>
+            <br>
+        <textarea class='oriInput pt-5' style="width:100%;height:150px;">원문</textarea>
+            <br>
+        <button id='LangDetectBtn'>언어감지</button>
+            <br><br>
+        <textarea style="width:100%;height:150px;" value = "only read" readonly>번역문</textarea>
+            <br>
+        <button onclick="alert('err');">번역</button>
+            
+    </fieldset>
+   </div>
+   <script>
+       console.log(2)
+       $('#LangDetectBtn').on('click',()=>{
+           console.log( $('.oriInput').val())
+           $.post({
+                'url':'/langTypeDetect',              // 서버주소
+                'data':'ori=' + $('.oriInput').val(),// 파라미터
+                'dataType':'json',  // 서버가 json으로 응답한다
+                'success':( resJson )=>{
+                    console.log( '통신성공', resJson )
+                }, // 통신성공후
+                'error':function ( err ){
+                    console.log('통신실패', err)
+                } // 통신실패후
+            })
+            //alert('호출')
+        })
+
+   </script>
+</body>
+</html>
