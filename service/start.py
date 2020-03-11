@@ -6,7 +6,8 @@
 from flask import Flask, render_template, request
 # flask의 json 팩 
 from flask import jsonify 
-from service.db import 
+from db import selectAreaGps
+
 # 생성 팩 불러오기 
 # from ml import detect_lang
 ## from service.ml import detect_lang
@@ -23,14 +24,25 @@ def home():
 # 번외
 @app.route('/map')
 def map():
-    gu_id = request
+    # 목적 : getmap 
+    # 파라미터를 받는다 - 서버로 부터 
+    gu_id = request.args.get('gu_id')
+    print(gu_id)
 
-    return jsonify(selectAreaGps(gu_id))
+    # json으로 응답 - __init__ 에서 만든 함수  
+    return jsonify( selectAreaGp(gu_id) )
+
+   
 
 # 번외-2
 @app.route('/test')
 def test():
     return render_template('test.html')
+
+
+
+
+
 
 # 3-1단계 - 언어 감지 처리(langTypeDetect)
 @app.route('/langTypeDetect')

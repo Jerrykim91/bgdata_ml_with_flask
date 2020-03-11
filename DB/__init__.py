@@ -1,27 +1,30 @@
-# py mysql을 이용 하여 akfldk dusehd 
+# py mysql을 이용 하여 마리아 디비 연동 
 # 서버 쪽으로 요청이 들어 왔을 때, 
-# 디비 쪽으로 쿼리 기능쪽으로 
+# 디비 쪽으로 쿼리가 필요하다면 
+# 해당 기능를 제공하는 함수들을 모아둔다 
 
 import pymysql as pSql
 
+# selectAreaGps
+def selectAreaGps():
+    # 무슨 함수 
+    # 디비랑 플라스크랑 연결 
 
-# gu_id : 1 ~ : 서울시 자치구 번호 
+    # 디비연결 
+    connection = pSql.connect(host='localhost',     # 호스트 이름 
+                                user='root',        # 유저이름 
+                                password='1234'*2,  # 비밀번호 
+                                db='python_db',     # 데이터베이스 이름 
+                                charset='utf8mb4',  # 인코딩 
+                                cursorclass=pSql.cursors.DictCursor) # 
 
-def selectAreaGps( gu_id ):
-  # 쿼리 수행
-  
-    connection = pSql.connect(host='localhost',
-                                user='root',
-                                password='1234'*2,
-                                db='python_db',
-                                charset='utf8mb4',
-                                cursorclass=pSql.cursors.DictCursor)
-    # defult result
-    result  = []
-    
+    # defult result 
+    result = [] # 배열 
+
     try:
         with connection.cursor() as cursor:
             
+            # sql문 작성 
             sql = """
             SELECT  * FROM  tbl_gps
             WHERE gu_id = %s;
@@ -41,5 +44,5 @@ def selectAreaGps( gu_id ):
 
 # test 용도 
 #    
-if __name__ == "__main__":
-    selectAreaGps(1)
+# if __name__ == "__main__":
+#     selectAreaGps(1)
