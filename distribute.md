@@ -133,26 +133,26 @@ See "man sudo_root" for details.
 
 --- # 기본 오픈 창 
 
-ubuntu@ip-172-31-37-87:~$ ls # 아무것도 없음 
+ubuntu@ip-***:~$ ls # 아무것도 없음 
 
 # 정상 체크 
-ubuntu@ip-172-31-37-87:~$ cd ..
-ubuntu@ip-172-31-37-87:/home$ cd ..
-ubuntu@ip-172-31-37-87:/$ ls
+ubuntu@ip-***:~$ cd ..
+ubuntu@ip-***:/home$ cd ..
+ubuntu@ip-***:/$ ls
 bin   home            lib64       opt   sbin  tmp      vmlinuz.old
 boot  initrd.img      lost+found  proc  snap  usr
 dev   initrd.img.old  media       root  srv   var
 etc   lib             mnt         run   sys   vmlinuz
 
 # 로그 
-ubuntu@ip-172-31-37-87:/$ cd var
-ubuntu@ip-172-31-37-87:/var$ ls
+ubuntu@ip-***:/$ cd var
+ubuntu@ip-***:/var$ ls
 backups  cache  crash  lib  local  lock  log  mail  opt  run  snap  spool  tmp
-ubuntu@ip-172-31-37-87:/var$
+ubuntu@ip-***:/var$
 
 # 다시 정상 환경 
-ubuntu@ip-172-31-37-87:/var$ cd /home/ubuntu
-ubuntu@ip-172-31-37-87:~$ cd
+ubuntu@ip-***:/var$ cd /home/ubuntu
+ubuntu@ip-***:~$ cd
 
 ```
 ---
@@ -308,19 +308,19 @@ def _restart_apache2():
 ```    
 
 ---
-# deploy from git 
-deploy
 
-# 세팅절차 
+# deploy from git 
+---
+## 세팅절차 
 1. git 새로운 저장소 생성 
-    - https://github.com/유저아이디/deploy.git
+    - https://github.com/jsrrykim91/deploy.git
 
 2. 로컬 PC에서 aws폴더를 vscode 에서 오픈 
 3. 터미널 오픈
 4. `$ git clone https://github.com/유저아이디/deploy.git`
-5. 터미널에서  `cd deploy `
+5. 터미널에서 경로 이동 => `cd deploy`
 
-# 파일 세팅 (~/aws/deploy)
+## 파일 세팅 (~/aws/deploy)
 1. deploy.json, fabfile.py 두 파일을 deploy에 옮긴다 
 2. 서버파일 생성  
 3. run.py, wsgi.py 생성
@@ -328,7 +328,7 @@ deploy
 5. 배포관련 환경 변수 파일 수정(deploy.json) 
 
 ```json
-// deploy.json
+// deploy.json 수정 
 {
     //  깃허브 경로 
     "REPO_URL":"https://github.com/유저아이디/deploy",
@@ -350,13 +350,13 @@ deploy
 flask ==  1.0.2  
 ```
 ---
-# 구동 
+## 구동 
 - python3 버전 기반으로 수행 
 - 운영 체계 및 서버 세팅 및 배포, 업데이트 관리등을 자동화 하는 모듈 => fabric3 => 설치 
 - `$ pip3 install fabric3`
 
 ```py
-#  수정 
+#  fabfile.py 수정 
 # line 24
 env.use_ssh_config = True
 env.key_filename = '../내파일이름.pem' # 변경
@@ -386,4 +386,31 @@ Warning: Unable to load SSH config file 'C:\Users\admin\.ssh\config'
 would you update?: [y/n]y
 
 ```
+---
+
+3. 브라우저 가동 : http://13.209.97.183/
+    - 브라우저 접속 
+
+4. 접속 로그 확인 (리눅스에서 진행 )
+    - $ tail -f /var/apache2/access.log
+
+``` bash
+# 디렉토리 확인 
+ubuntu@ip-***:~$ ls
+deploy
+ubuntu@ip-***:~$ cd deploy
+ubuntu@ip-***:~/deploy$ ls
+README.md  deploy.json  fabfile.py  reguirements.txt  run.py  wsgi.py
+ubuntu@ip-***:~/deploy$
+
+# 로그 확인 
+ubuntu@ip-***:~/deploy$ tail -f /var/apache2/access.log
+tail: cannot open '/var/apache2/access.log' for reading: No such file or directory
+tail: no files remaining
+ubuntu@ip-***:~/deploy$ # 동작 안함 - 서버 요청이 막힘 
+
+```
+- 인바운드 룰 
+- 새로 생성 
+    - http -> anywhere
 ---
