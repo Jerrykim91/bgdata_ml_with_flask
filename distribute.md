@@ -1,60 +1,58 @@
 # 배포 진행과정 설명 
-- distribute.md
----
 
-# 아마존 aws 로그인 
-https://us-east-2.console.aws.amazon.com/ec2/v2/home?region=us-east-2#LaunchInstanceWizard:
+---
 
 # aws
+- 아마존 aws 콘솔 로그인 
 - 네비바에서 서울로 위치를 맞추고 진행 
-    - 만약에 다른나라로 설정한경우 삭제(종료)하고 다시 
-- 네비바 서비스 -> EC2 ->인스턴트시작 클릭  ->  단계가 나옴 
+    - 만약에 다른나라로 설정하고 아래사항을 진행한 경우 삭제(종료)하고 다시 
+- 네비바 서비스 -> EC2 ->인스턴트시작 클릭 ->  7단계가 나옴 
 
 ---
 
-# EC2
-## 총 7단계 
+# EC2 - 총 7단계 
 ## 단계 1: Amazon Machine Image(AMI) 선택
-    - 프리티어만 [체크 ]
+    - 프리티어만 [체크]
         - 기본적으로 
         - 리눅스 
         - 윈도우 
     - Ubuntu Server 18.04 LTS (HVM), SSD Volume Type - ami-0fc20dd1da406780b (64비트 x86) / ami-0959e8feedaf156bf (64비트 Arm)
 
-## 단계 2: 인스턴스 유형 선택 -> 바로 7단계로 이동(auto잡혀서 디폴트로 세팅됨 그래서 단계 )  
+## 단계 2: 인스턴스 유형 선택 
+    - 바로 7단계로 이동(auto 잡혀서 디폴트로 세팅됨 그래서 7단계 )  
+
 ## 단계 7: 인스턴스 시작 검토
     - 새로 한사람 
         - 새 키 페어
     - 기존 
         - 기존 키 페어 
             - 체크박스 체크 
-
-    - 인스턴스 아이디 : i-051c53ebb1c9c0ba5
+    - 인스턴스 아이디 : ********
     - IPv4 퍼블릭 IP
-        - 13.209.97.183 : 내서버 아이피 
-        - 도메인 : ec2-13-209-97-183.ap-northeast-2.compute.amazonaws.com
+        - 13.***.97.*** : 내서버 아이피 
+        - 도메인
 ---
 
 # 데이터 베이스 
-    - 엔드 포인트 (주소): python-db.c2qr7mol2ce4.ap-northeast-2.rds.amazonaws.com
+    - 엔드 포인트 (주소)
+        - python-db.c2qr7mol2ce4.ap-northeast-2.rds.amazonaws.com
     - RDS 
     - 팝업창 - 기존 스타일로 바꾸기 클릭 
         -  엔진선택 
-            - 마리아 - 체크박스 []
+            - 마리아 - 체크박스 [체크]
         - DB 세부 정보 지정
-            - 주의 ] 다중 AZ 배포(설정 x )
+            - 주의) 다중 AZ 배포(설정 x )
             - 스토리지 자동 조정 활성화[ 체크해제 ]
         - 설정 
             - DB 인스턴스 식별자 : python-db
             - 마스터 사용자 이름 : root
-            - 마스터 암호 : 12341234
+            - 마스터 암호 : 8자리 비번 
     - 고급 설정 구성
         - 퍼블릭 액세스 가능성 : y
     - 데이터베이스 옵션
         - 데이터베이스 이름
             - python_db
             - 3306
-
         -  안한다 함 
             스냅샷 x
             다 x 
@@ -68,13 +66,12 @@ https://us-east-2.console.aws.amazon.com/ec2/v2/home?region=us-east-2#LaunchInst
 ## aws 이동 마리아 디비 관리 화면 클릭 
     - 하위 탭에 보안 그룹안에 링크로 이동
         - 인바운드룰 
-
 ---
 
 ## EC2 대시보드 
     - 실행중인 데시보드 클릭 
-    - 실행중인 인스턴스 우클릭 연결 
-    - 
+    - 실행중인 인스턴스 우클릭 
+    - 연결  
 
 ## Download PuTTY
 - https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
@@ -343,7 +340,8 @@ def _restart_apache2():
 ```
 ---
 
-6. reguirements.txt : 본서비스를 구동하기 위해 필요 
+6. requirements.txt 
+    - 본서비스를 구동하기 위해 필요 
 
 ```txt
 <!-- 버전정보입력 -->
@@ -392,10 +390,15 @@ would you update?: [y/n]y
     - 브라우저 접속 
 
 4. 접속 로그 확인 (리눅스에서 진행 )
-    - $ tail -f /var/apache2/access.log
+    - $ tail -f /var/log/apache2/access.log
+    - 모니터링하다가 
+    - 종료 : ctrl +c 
+    
+5. 에러 로그 
+    - $ tail -f /var/log/apache2/error.log
+    - 종료 : ctrl +c 
 
 ``` bash
-# 디렉토리 확인 
 ubuntu@ip-***:~$ ls
 deploy
 ubuntu@ip-***:~$ cd deploy
@@ -404,8 +407,8 @@ README.md  deploy.json  fabfile.py  reguirements.txt  run.py  wsgi.py
 ubuntu@ip-***:~/deploy$
 
 # 로그 확인 
-ubuntu@ip-***:~/deploy$ tail -f /var/apache2/access.log
-tail: cannot open '/var/apache2/access.log' for reading: No such file or directory
+ubuntu@ip-***:~/deploy$ tail -f /var/log/apache2/access.log
+tail: cannot open '/var/log/apache2/access.log' for reading: No such file or directory
 tail: no files remaining
 ubuntu@ip-***:~/deploy$ # 동작 안함 - 서버 요청이 막힘 
 
@@ -413,4 +416,52 @@ ubuntu@ip-***:~/deploy$ # 동작 안함 - 서버 요청이 막힘
 - 인바운드 룰 
 - 새로 생성 
     - http -> anywhere
+---
+## 이후 과정 
+- 업데이트 
+    - `$ fab deploy`
+---
+
+## 잘 안될때 
+- 소스 코드상에 , 파일 명, 설정 값등 오타가 없어야 한다. 
+- git에 최종 소스코드가 올라 가있어야 한다 
+- 리눅스에서 기존의 흔적을 모드 삭제 해야한다 
+```
+$ls -a 
+$ rm -r -f .virtualenvs
+- 로컬 PC
+$ fab new_server
+```
+---
+
+## 가상호스트가 설정된 부분 
+- deploy 프로젝트 명 - json에 정의 되어 있음 
+    - $ cat /etc/apache2/sites-available/deploy.conf
+
+    ```bash
+    <VirtualHost *:80>
+    ServerName 13.209.97.183
+    <Directory /home/ubuntu/deploy>
+        <Files wsgi.py>
+            Require all granted
+        </Files>
+    </Directory>
+    WSGIDaemonProcess deploy python-home=/home/ubuntu/.virtualenvs/deploy python-path=/home/ubuntu/deploy
+    WSGIProcessGroup deploy
+    WSGIScriptAlias / /home/ubuntu/deploy/wsgi.py
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    </VirtualHost>
+    ```
+- 서버 주소 변경 
+    - git 업로드
+
+- 변경후 
+    - 업데이트 
+        - `$ fab deploy`
+        
+- 변경 됨 
+#### 여기까지 배포 운영 
 ---
