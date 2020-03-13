@@ -1,0 +1,138 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+    <!--화면 보이는 부분 시작-->
+    <div>
+        <h1>제목</h1>
+        <h1 class='food'>점심</h1>
+        <p class='food'>도시락</p>
+        <button>색변경</button>
+        <button id='blackBtn'>글자색검은색으로변경</button>
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <ol>
+                <li>a</li>
+                <li>b</li>
+                <li>c</li>
+            </ol>
+        </ul>
+        <input type='text' name='uid'>
+        <input type='password' name='upw'>
+
+        <table border='1' id='data'>
+            <tread>
+                <tr>
+                    <td>컬럼1</td>
+                    <td>컬럼2</td>
+                </tr>
+            </tread>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>a</td>
+                    <td>b</td>
+                </tr>
+                <tr>
+                    <td>a</td>
+                    <td>b</td>
+                </tr>
+                <tr>
+                    <td>a</td>
+                    <td>b</td>
+                </tr>
+                <tr>
+                    <td>a</td>
+                    <td>b</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--화면 보이는 부분 끝-->
+    <script>
+        // h1을 찾아서,
+        // $('css selector') : 요소를 찾는 방법
+        // 이 문서상에 존재하는 모든 h1 => 타입이 리스트, 배열...
+        $('h1')
+        // h1을 찾아서, 빨강색으로 글자색을 처리 (DOM조작 -> css조작)
+        $('h1').css('color','red')
+        // 색 변경 버튼을 누르면, h1의 하위 글자색이 파랑색으로 바뀐다
+        $('button').on('click', ()=>{
+            $('h1').css('color','blue')
+        })
+        // 아이디가 blackBtn인 요소를 찾아서(단수, id값은 고유하다)
+        // 이벤트를 등록
+        // 글자색 검은색으로 변경
+        $('#blackBtn').on('click', ()=>{
+            $('h1').css('color','black')
+        })
+    </script>
+    <script>
+        // 이 문서상에 존재하는 모든 h1중에 class가 food인 요소
+        $('h1.food').css('color','yellow')
+        // class가 food인 요소의 글자색을 yellow
+        // . => class 가 food인 것만 찾아라
+        // $('.food').css('color','yellow')
+        // li중에 1,2,3번만 글자색 빨강
+        // 특정이 안되면 부모, 자식 등 관계를 따진다
+        $('ul>li').css('color','red') // > : 왼쪽이 부모 오른쪽이 직계자식
+        // 후손(직계 자식도 포함된다)
+        $('ul li').css('color','blue') // 띄어쓰기 : 
+        // 열거
+        $ ('h1, h2, p').css('color','pink')
+        // 속성 셀렉터
+        // 입력창의 배경색을 lightgreen
+        $ ('[name=uid]').css('background','lightgreen')
+        // 의사결정셀렉터 -> 테이블, 리스트, 동적 리스트 구성시 사용
+        // 아이디가 data인 요소의 직계자식 tbody의 직계자식들 중 모든 tr
+        $ ('#data>tbody>tr').css('background', 'yellow')
+        // 첫번째 tr의 배경색을 green
+        $ ('#data>tbody>tr:first').css('background', 'green')
+        // 막내 -> 방금 추가된 요소 : last
+        $ ('#data>tbody>tr:last').css('background', 'red')
+        // 홀수
+        $ ('#data>tbody>tr:odd').css('background', 'white')
+        // 짝수
+        $ ('#data>tbody>tr:even').css('background', 'gray')
+        // 3번위치 조정
+        $ ('#data>tbody>tr:eq(3)').css('background', 'black')
+        // 기준 위치 하위로 전부
+        $ ('#data>tbody>tr:gt(3)').css('background', 'red')
+        // 기준 위치 위로 전부
+        $ ('#data>tbody>tr:lt(3)').css('background', 'blue')
+        // 특정위치
+        $ ('#data>tbody>tr:nth-child(1)').css('background', 'yeloiw')
+        // 요소찾기
+
+        // < 밑에 세개는 같은 의미! >
+        // html 4까지 사용
+        document.getElementsByTagName('h1')
+        // html 5까지 추가
+        document.querySelector('h1')
+        document.querySelector('#data')
+        $('h1')
+        $('#data')
+    </script>
+    <script>
+        // jQuery : javascript framework의 가장 전통적인 제품
+        // 손쉽게 js를 사용할 수 있어서 생산성을 극대화
+        // 대부분의 js들이 jQuery를 기반으로 구현되었다
+        // 미션1 : 색변경 버튼을 누르면, h1의 글자색을 빨강색으로 처리하시오(화면에 보이면 즉시)
+        // js로 해결하시오
+        // 그 곳을 조작한다
+        // 1. 요소(element)를 찾는다
+        //      $('css.selector')
+        // 2. 그 요소에 이벤트를 준다(on) or 요소를 조작한다
+        // or
+        // 3. 기타 통신처리(ajax)
+
+    </script>
+ 
+</body>
+</html>

@@ -430,6 +430,8 @@ ubuntu@ip-***:~/deploy$ # 동작 안함 - 서버 요청이 막힘
 $ls -a 
 $ rm -r -f .virtualenvs
 - 로컬 PC
+- `$ pip3 install fabric3`
+### 경로를 확인 할것 
 $ fab new_server
 ```
 ---
